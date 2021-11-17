@@ -96,7 +96,7 @@ module.exports.getProductsById = function (id) {
 
 module.exports.updateProductsById = function (id,data) {
     return new Promise((resolve, reject) => {
-        if(id == "" || data.name == "" ||  data.price == "" ||  data.category == "" ||  data.bestseller == ""){
+        if(id == "" || data.name == "" ||  data.price == "" ||  data.category == "" ||  data.bestseller == null){
             reject("Not all mandatory fields have been entered")
         }
         productModel.updateOne({_id : id}, {name : data.name, price : data.price, description : data.description, category : data.category, quantity : data.quantity, bestseller : data.bestseller, photoURL : data.photoURL}).exec().then(() =>{

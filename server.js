@@ -1,7 +1,8 @@
-//Heroku:
-//GirHub:
+//Heroku: https://mysterious-reef-45989.herokuapp.com/
+//GitHub: https://github.com/Vladlavv/web422Assignment1
 
 const express = require("express");
+const cors = require("cors")
 const app = express();
 const userController = require("./controllers/userController.js");
 const productController = require("./controllers/productController.js");
@@ -13,11 +14,16 @@ const Mongoose = require("mongoose");
 
 var HTTP_PORT = process.env.PORT || 8080;
 
+app.use(cors());
+
+app.options('*', cors());
+
 app.use(express.json())
 
 app.use("/users", userController)
 
 app.use("/products", productController)
+
 
 app.use((req, res) => {
     res.status(404).send("ERROR 404. PAGE IS NOT FOUND");

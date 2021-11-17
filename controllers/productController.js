@@ -1,4 +1,5 @@
 let express = require("express");
+const cors = require("cors")
 const router = express.Router();
 const productService = require("../services/productService.js");
 
@@ -14,7 +15,7 @@ router.post("/", (req, res) => {
 
 //read (get)
 
-router.get("/", (req, res) => {
+router.get("/", cors(), (req, res, next) => {
     productService.getAllProducts().then((data) =>{
         res.json(data);
     }).catch((err) =>{
@@ -22,15 +23,15 @@ router.get("/", (req, res) => {
     });
 })
 
-router.get("/category", (req, res) => {
+router.get("/category", cors(), (req, res, next) => {
     productService.getProductsCategories().then((data) =>{
-        res.json(data);
+        res.json({"data" : data});
     }).catch((err) =>{
         res.json({error : err})
     });
 })
 
-router.get("/category/:category", (req, res) => {
+router.get("/category/:category", cors(), (req, res, next) => {
     productService.getProductsByCategory(req.params.category).then((data) =>{
         res.json(data);
     }).catch((err) =>{
@@ -38,7 +39,7 @@ router.get("/category/:category", (req, res) => {
     });
 })
 
-router.get("/bestseller", (req, res) => {
+router.get("/bestseller", cors(), (req, res, next) => {
     productService.getProductsByBestseller().then((data) =>{
         res.json(data);
     }).catch((err) =>{
@@ -46,7 +47,7 @@ router.get("/bestseller", (req, res) => {
     });
 })
 
-router.get("/:id", (req, res) => {
+router.get("/:id", cors(), (req, res, next) => {
     productService.getProductsById(req.params.id).then((data) =>{
         res.json(data);
     }).catch((err) =>{
@@ -55,7 +56,7 @@ router.get("/:id", (req, res) => {
 })
 
 //update (put)
-router.put("/:id", (req, res) => {
+router.put("/:id", cors(), (req, res, next) => {
     productService.updateProductsById(req.params.id, req.body).then((data) =>{
         res.json(data);
     }).catch((err) =>{
@@ -64,7 +65,7 @@ router.put("/:id", (req, res) => {
 })
 
 //delete (delete)
-router.delete("/:id", (req, res) => {
+router.delete("/:id", cors(), (req, res, next) => {
     productService.deleteProductsById(req.params.id).then(() =>{
         res.json("Product with the following ID has been deleted: " + req.params.id);
     }).catch((err) =>{

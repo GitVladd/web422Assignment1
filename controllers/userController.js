@@ -1,9 +1,11 @@
 let express = require("express");
+const cors = require("cors")
 const router = express.Router();
 const userService = require("../services/userService.js");
 
+
 //create
-router.post("/", (req,res) =>{
+router.post("/", cors(), (req, res, next) =>{
     userService.registerUser(req.body).then((data) =>{
         res.json(data);
     }).catch((err) =>{
@@ -12,7 +14,7 @@ router.post("/", (req,res) =>{
 });
 
 //read
-router.get("/:id", (req,res) =>{
+router.get("/:id", cors(), (req, res, next) =>{
     userService.getUserById(req.params.id).then((data) =>{
         res.json({
             id : data._id,
